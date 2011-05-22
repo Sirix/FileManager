@@ -1,0 +1,25 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:FileManager"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    mc:Ignorable="d" x:Class="FileManager.MainWindow"
+        Title="File Manager by Sirix" Background="#FF606060" x:Name="MainForm" xml:lang="ru-RU" MinHeight="140" MinWidth="380" Icon="Images/NOTEBOOK_48x48-32.png">
+    <Grid HorizontalAlignment="Stretch">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto" MaxWidth="50" MinWidth="50"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TextBlock Margin="80.017,123,294.017,0" TextWrapping="Wrap" Text="Start working " Foreground="#FFB4B4B4" FontSize="64" Height="93" VerticalAlignment="Top"/>
+        <TextBlock Margin="250.21,216,0,196" TextWrapping="Wrap" Text="new File Manager" Foreground="#FFB4B4B4" FontSize="56" HorizontalAlignment="Left"/>
+        <TextBlock Margin="163.21,233.267,465.79,204.233" TextWrapping="Wrap" Text="with" Foreground="#FFB4B4B4" FontSize="40"/>
+        <TextBlock Margin="250.21,216,0,181" TextWrapping="Wrap" Text="new" Foreground="White" FontSize="56" HorizontalAlignment="Left" Width="109.29" d:LayoutOverrides="HorizontalAlignment"/>
+        <TextBlock Margin="561,301,0,129" TextWrapping="Wrap" Text="today" Foreground="White" FontSize="46.667" HorizontalAlignment="Left" Width="125.79"/>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled"> 
+            <StackPanel Orientation="Horizontal" x:Name="mainPanel" HorizontalAlignment="Center" Panel.ZIndex="5">
+            </StackPanel>
+        </ScrollViewer> 
+        <Button Grid.Column="1" Content="+" Height="30" x:Name="btnCreateNewPanel" Click="btnCreateNewPanel_Click" Margin="10,0,10,0" HorizontalAlignment="Right" Width="30" Panel.ZIndex="55" VerticalAlignment="Center" />
+</Grid>
+</Window>

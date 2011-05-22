@@ -1,0 +1,14 @@
+﻿<Window
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="FileManager.CreateFileWindow"
+    Title="CreateFile" Height="93" Width="370" WindowStyle="ToolWindow" ResizeMode="NoResize">
+	<Window.Background>
+		<SolidColorBrush Color="{DynamicResource FormBackgroundColor}"/>
+	</Window.Background>
+    <Grid>
+        <TextBox Margin="12,12,13,0" x:Name="tbname" Height="25" VerticalAlignment="Top"/>
+        <Button IsDefault="True" Height="23" Margin="179,0,92,6" x:Name="btnSave" VerticalAlignment="Bottom" Click="btnSave_Click" Content="Создать" d:LayoutOverrides="VerticalAlignment"/>
+        <Button IsCancel="True" Height="23" HorizontalAlignment="Right" Margin="0,0,13,6" x:Name="btnCancel" VerticalAlignment="Bottom" Width="75" Content="Отмена" d:LayoutOverrides="VerticalAlignment"/>
+    </Grid>
+</Window>
