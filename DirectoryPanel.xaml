@@ -60,7 +60,7 @@
         <Grid>
             <TextBox x:Name="tbLocation"  Margin="6,6,24.417,0" Height="25" VerticalAlignment="Top" TabIndex="1" KeyDown="tbLocation_KeyDown"/>
             <!--ItemContainerStyle="{StaticResource SimpleListBoxItem}" -->
-            <ListBox x:Name="DirectoryList" Background="White" Margin="6,36,6,32" SelectionMode="Single" AllowDrop="True" TabIndex="2" 
+            <ListBox x:Name="DirectoryList" Background="White" Margin="6,36,6,32" SelectionMode="Extended" AllowDrop="True" TabIndex="2" 
                      ItemsSource="{Binding DirectoryListing}"
                      Drop="DirectoryList_Drop"
                      MouseMove="DirectoryList_MouseMove"

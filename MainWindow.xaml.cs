@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 
 namespace FileManager
@@ -39,6 +40,8 @@ namespace FileManager
 
         private void ScrollViewer_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
+            if (e.OriginalSource is ListBoxItem) return;
+
             foreach (DirectoryPanel item in mainPanel.Children)
             {
                 //get mouse position relative to directorypanel
