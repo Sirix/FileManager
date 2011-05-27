@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Data;
 
@@ -27,14 +28,28 @@ namespace FileManager
             mainPanel.Children.Add(panel);
 
             //bind newly created control height property to actualheight property of master stackpanel
-            Binding b = new Binding("ActualHeight");
-            b.Source = mainPanel;
+            Binding b = new Binding("ActualHeight") {Source = mainPanel};
             panel.SetBinding(FrameworkElement.HeightProperty, b);
         }
 
         void panel_ClosingIsRequested(DirectoryPanel instance)
         {
             mainPanel.Children.Remove(instance);
+        }
+
+        private void ScrollViewer_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            foreach (DirectoryPanel item in mainPanel.Children)
+            {
+                //get mouse position relative to directorypanel
+                var pt = FileManager.Interop.MouseUtilities.CorrectGetPosition(item);
+                if (pt.X <= item.ActualWidth)
+                {
+                    //call dp instance to handle key event
+                    item.DirectoryList_KeyDown(null, e);
+                    break;
+                }
+            }
         }
     }
 }

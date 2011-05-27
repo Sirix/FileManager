@@ -16,7 +16,7 @@
         <TextBlock Margin="163.21,233.267,465.79,204.233" TextWrapping="Wrap" Text="with" Foreground="#FFB4B4B4" FontSize="40"/>
         <TextBlock Margin="250.21,216,0,181" TextWrapping="Wrap" Text="new" Foreground="White" FontSize="56" HorizontalAlignment="Left" Width="109.29" d:LayoutOverrides="HorizontalAlignment"/>
         <TextBlock Margin="561,301,0,129" TextWrapping="Wrap" Text="today" Foreground="White" FontSize="46.667" HorizontalAlignment="Left" Width="125.79"/>
-        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled"> 
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" KeyDown="ScrollViewer_KeyDown"> 
             <StackPanel Orientation="Horizontal" x:Name="mainPanel" HorizontalAlignment="Center" Panel.ZIndex="5">
             </StackPanel>
         </ScrollViewer> 

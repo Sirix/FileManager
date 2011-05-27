@@ -3,8 +3,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:System="clr-namespace:System;assembly=mscorlib"
-    xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
     x:Name="userControl"
     x:Class="FileManager.DirectoryPanel"
     d:DesignHeight="300" Width="auto" Background="#FF1B1B1B" BorderBrush="#FFE00000" mc:Ignorable="d" MinHeight="100">
@@ -61,13 +59,14 @@
     <Border BorderThickness="1" Width="300" Margin="5,0,5,0" BorderBrush="#FF0A22EB">
         <Grid>
             <TextBox x:Name="tbLocation"  Margin="6,6,24.417,0" Height="25" VerticalAlignment="Top" TabIndex="1" KeyDown="tbLocation_KeyDown"/>
-			<!--ItemContainerStyle="{StaticResource SimpleListBoxItem}" -->
-            <ListBox x:Name="DirectoryList" Background="White" Margin="6,36,6,32" SelectionMode="Extended" AllowDrop="True" TabIndex="2" 
+            <!--ItemContainerStyle="{StaticResource SimpleListBoxItem}" -->
+            <ListBox x:Name="DirectoryList" Background="White" Margin="6,36,6,32" SelectionMode="Single" AllowDrop="True" TabIndex="2" 
                      ItemsSource="{Binding DirectoryListing}"
                      Drop="DirectoryList_Drop"
                      MouseMove="DirectoryList_MouseMove"
                      PreviewMouseLeftButtonDown="DirectoryList_PreviewMouseLeftButtonDown"
-                     ContextMenuOpening="DirectoryList_ContextMenuOpening">
+                     ContextMenuOpening="DirectoryList_ContextMenuOpening"
+                     >
                 <ListBox.ContextMenu>
                     <ContextMenu>
                         <ContextMenu.Resources>
@@ -85,7 +84,6 @@
                 </ListBox.ContextMenu>
             	<ListBox.ItemTemplate>
             		<DataTemplate>
-
                         <Grid Height="30" Width="260" ClipToBounds="True" Margin="0">
                             <Grid.ContextMenu>
                                 <ContextMenu x:Name="cmProperties">

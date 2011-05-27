@@ -97,10 +97,8 @@ namespace FileManager
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void DirectoryList_KeyDown(object sender, KeyEventArgs e)
+        public void DirectoryList_KeyDown(object sender, KeyEventArgs e)
         {
-            var lb = sender as ListBox;
-
             var dcPanel = this.DataContext as DirPanel;
 
             if (e.Key == Key.F4)
