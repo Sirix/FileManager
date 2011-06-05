@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System;
 using System.Diagnostics;
+using System.Windows;
 
 namespace FileManager
 {
@@ -56,6 +57,14 @@ namespace FileManager
                         OnPropertyChanged("OpenedDirectory");
 
                         _historyInternal.Add(value);
+
+                        if (value != @"Мой компьютер" && value != @"\\")
+                        {
+                            fsw.Path = value;
+                            fsw.EnableRaisingEvents = true;
+                        }
+                        else
+                            fsw.EnableRaisingEvents = false;
                     }
                 }
                 catch (Exception e)
@@ -82,6 +91,9 @@ namespace FileManager
             }
         }
 
+        private FileSystemWatcher fsw;
+
+
         private HistoryList _historyInternal;
         public IEnumerable<string> History { get { return _historyInternal.Reverse(); } }
 
@@ -98,6 +110,7 @@ namespace FileManager
 
         private string _localDisk;
 
+        [Obsolete]
         public string LocalDisk
         {
             get { return _localDisk; }
@@ -176,9 +189,62 @@ namespace FileManager
         public DirPanel(string directory)
         {
             DirectoryListing = new ObservableCollection<ExtFileSystemInfo>();
+            fsw = new FileSystemWatcher();
+            fsw.Created += fsw_Event;
+            fsw.Deleted += fsw_Event;
+            fsw.Changed += fsw_Event;
+            fsw.Renamed += new RenamedEventHandler(fsw_Renamed);
+
             _historyInternal = new HistoryList(FileManager.Properties.Settings.Default.HistoryElementsCount);
 
             OpenedDirectory = directory;
+        }
+
+        void fsw_Renamed(object sender, RenamedEventArgs e)
+        {
+            Application.Current.Dispatcher.BeginInvoke(
+                new Action(() => DirectoryListing.First(i => i.FullName == e.OldFullPath).UpdateFileName(e.FullPath)));
+        }
+
+        void fsw_Event(object sender, FileSystemEventArgs e)
+        {
+            if (e.ChangeType == WatcherChangeTypes.Created)
+            {
+                Application.Current.Dispatcher.BeginInvoke(
+                    new Action(() =>
+                                   {
+                                       DirectoryListing.Add(new ExtFileSystemInfo(e.FullPath));
+                                       var en = DirectoryListing.ToArray();
+                                       Array.Sort(en,
+                                                                new Comparison<ExtFileSystemInfo>((x, y) =>
+                                                                {
+                                                                    if (x.IsDirectory && !y.IsDirectory)
+                                                                        return -1;
+                                                                    if (x.IsDirectory && y.IsFile) return 1;
+
+                                                                    return string.Compare(x.Name, y.Name);
+                                                                }));
+                                       int sorted = -1;
+                                       for (int i = 0; i < en.Length; i++)
+                                       {
+                                           if(en[i].Name == e.Name || en[i].Name == string.Format("[{0}]", e.Name))
+                                           {
+                                               sorted=i;
+                                               break;
+                                           }
+                                       }
+                                       DirectoryListing.Move(DirectoryListing.Count - 1, sorted);
+                                   }));
+            }
+            if (e.ChangeType == WatcherChangeTypes.Deleted)
+            {
+                Application.Current.Dispatcher.BeginInvoke(
+                    new Action(() => DirectoryListing.Remove(DirectoryListing.First(i => i.FullName == e.FullPath))));
+            }
+            if (e.ChangeType == WatcherChangeTypes.Changed)
+            {
+
+            }
         }
         internal void Refresh()
         {
@@ -191,8 +257,6 @@ namespace FileManager
                 File.Create(Path.Combine(OpenedDirectory, name));
             else
                 Directory.CreateDirectory(Path.Combine(OpenedDirectory, name));
-
-            this.Refresh();
         }
     }
 }

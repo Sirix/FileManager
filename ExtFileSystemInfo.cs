@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.IO;
@@ -8,7 +9,7 @@ using System.Text.RegularExpressions;
 
 namespace FileManager
 {
-    public class ExtFileSystemInfo : FileSystemInfo
+    public class ExtFileSystemInfo : FileSystemInfo, INotifyPropertyChanged
     {
         public static double Byte = 1024;
         public static double Kilobyte = Math.Pow(1024, 2);
@@ -24,9 +25,7 @@ namespace FileManager
 
             IsDirectory = Directory.Exists(path);
 
-            //IsDirectory = base.Attributes.HasFlag(FileAttributes.Directory);
             Icon = FileIconHelper.get().Find(base.FullPath);
-            ///   Icon = Etier.IconHelper.IconReader.GetFileIcon(base.FullPath, Etier.IconHelper.IconReader.IconSize.Small, true).ToImageSource();
 
             IsLocalDisk = new Regex(@"^[a-zA-Z]:\\$").Match(this.FullPath).Success;
 
@@ -155,5 +154,20 @@ namespace FileManager
             return targetName;
         }
 
+
+        internal void UpdateFileName(string path)
+        {
+            base.FullPath = path;
+            base.Refresh();
+
+            Icon = FileIconHelper.get().Find(base.FullPath);
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs("Name"));
+                PropertyChanged(this, new PropertyChangedEventArgs("Icon"));
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

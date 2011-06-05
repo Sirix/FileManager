@@ -20,6 +20,8 @@ namespace FileManager
                 this.Title = "Create File";
             else
                 this.Title = "Create Folder";
+
+            tbname.Focus();
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)

@@ -176,7 +176,6 @@ namespace FileManager
                     this.DisplayError(string.Format("Ошибка удаления файла/папки \n{0} \nПричина: {1}", i.Name, e.Message), "Удаление");
                 }
             }
-            (this.DataContext as DirPanel).Refresh();
         }
 
         private void ToggleSelectedItemColor()
@@ -359,6 +358,7 @@ namespace FileManager
         {
             var dlg = new CreateFileWindow(t);
             dlg.ShowDialog();
+            dlg.Owner = Application.Current.MainWindow;
 
             if (dlg.DialogResult.HasValue && dlg.DialogResult.Value)
                 (this.DataContext as DirPanel).CreateObject(t, dlg.Result);
