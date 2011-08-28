@@ -66,7 +66,18 @@ namespace FileManager
                         else
                             fsw.EnableRaisingEvents = false;
                     }
+                    //block for handling MS Windows path constants - %WINDIR%, %TEMP%, etc...
+                    else if (value[0] == value.Last() && value[0] == '%')
+                    {
+                        //if surrounded with %
+                        string variable = value.Replace("%", "");
+                        string dir = Environment.GetEnvironmentVariable(variable);
+
+                        if (dir != null && Directory.Exists(dir))
+                            OpenedDirectory = dir;
+                    }
                 }
+
                 catch (Exception e)
                 {
                     throw new FileSystemItemRunException(e.Message);
