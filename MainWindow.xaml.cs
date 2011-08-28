@@ -18,6 +18,10 @@ namespace FileManager
             InitializeComponent();
             btnCreateNewPanel_Click(null, null);
             btnCreateNewPanel_Click(null, null);
+
+#if DEBUG
+            ((mainPanel.Children[0] as DirectoryPanel).DataContext as FileManager.DirPanel).OpenedDirectory = @"e:\prodinner\";
+#endif
         }
 
         private void btnCreateNewPanel_Click(object sender, RoutedEventArgs e)

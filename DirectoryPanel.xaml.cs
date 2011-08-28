@@ -514,5 +514,32 @@ namespace FileManager
             }
             return null;
         }
+
+        private void Thumb_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
+        {
+            //get tag - LeftResizer or RightResizer
+            string tag = ((FrameworkElement) sender).Tag.ToString();
+
+            Width = ActualWidth;
+
+            if (tag == "RightResizer")
+            {
+                //negative change means that control is decreasing
+                if (e.HorizontalChange < 0)
+                    Width = Math.Max(MinWidth, Width + e.HorizontalChange);
+                //otherwise, increasing
+                else
+                    Width += e.HorizontalChange;
+            }
+            else
+            {
+                //negative change means that control is increasing
+                if (e.HorizontalChange < 0)
+                    Width -= e.HorizontalChange;    
+                //otherwise, decreasing
+                else
+                    Width = Math.Max(MinWidth, Width - e.HorizontalChange);
+            }
+        }
     }
 }

@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     x:Name="userControl"
     x:Class="FileManager.DirectoryPanel"
-    d:DesignHeight="300" Width="auto" Background="#FF1B1B1B" BorderBrush="#FFE00000" mc:Ignorable="d" MinHeight="100">
+    d:DesignHeight="300" Width="auto" Background="#FF1B1B1B" BorderBrush="#FFE00000" mc:Ignorable="d" MinHeight="100" MinWidth="310">
 	<UserControl.Resources>
        
         <!--	<Style x:Key="SimpleListBoxItem" TargetType="ListBoxItem">
@@ -56,7 +56,7 @@
 			<BeginStoryboard Storyboard="{StaticResource control_load}"/>
 		</EventTrigger>
 	</UserControl.Triggers>
-    <Border BorderThickness="1" Width="300" Margin="5,0,5,0" BorderBrush="#FF0A22EB">
+    <Border BorderThickness="1" Width="Auto" Margin="5,0,5,0" BorderBrush="#FF0A22EB" >
         <Grid>
             <TextBox x:Name="tbLocation"  Margin="6,6,24.417,0" Height="25" VerticalAlignment="Top" TabIndex="1" KeyDown="tbLocation_KeyDown"/>
             <!--ItemContainerStyle="{StaticResource SimpleListBoxItem}" -->
@@ -106,8 +106,17 @@
                             </Grid.ContextMenu>
                             <Grid.ToolTip>
                                 <StackPanel Orientation="Vertical">
-                                    <!--<TextBlock Text="{Binding Size, StringFormat=Size: {0}}"/>-->
-                                    <TextBlock Text="{Binding LastWriteTime}"/>
+                                    <StackPanel.Style>
+                                        <Style TargetType="StackPanel">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsSpecial}" Value="True">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </StackPanel.Style>
+                                    <TextBlock Text="{Binding LastWriteTime}">
+                                    </TextBlock>
                                 </StackPanel>
                             </Grid.ToolTip>
                             <Image Source="{Binding Icon}"  Height="15" HorizontalAlignment="Left" Margin="4,7,0,0" x:Name="image1" Stretch="Fill" VerticalAlignment="Top" Width="15" />
@@ -130,9 +139,9 @@
                     </DataTemplate>      	
 				</ListBox.ItemTemplate>
             	</ListBox>
-            <Grid Height="20" Margin="6,0,0,6" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="286" Background="DarkGray">
+            <Grid Height="20" Margin="6,0,6,6" VerticalAlignment="Bottom" Width="Auto" Background="DarkGray" d:LayoutOverrides="Width">
                 <TextBlock HorizontalAlignment="Left" Margin="5,1,0,1" Text="{Binding InformationLine}" VerticalAlignment="Top" x:Name="directorySum"/>
-                <Button Height="20" x:Name="btnOptions" VerticalAlignment="Top" Width="20" Margin="266,0,0,0" Click="btnOptions_Click" BorderThickness="0">
+                <Button Height="20" x:Name="btnOptions" VerticalAlignment="Top" Width="20" Click="btnOptions_Click" BorderThickness="0" HorizontalAlignment="Right" d:LayoutOverrides="Width">
                 	<Button.Background>
                 		<ImageBrush ImageSource="Images\SETTINGS_48x48-32.png" Stretch="Uniform"/>
                 	</Button.Background>
@@ -175,6 +184,8 @@
 				</Button.ContextMenu>
             </Button>
             <Button Click="btnClose_Click" HorizontalAlignment="Right" Margin="0,5,6,0" x:Name="btnClose" Width="15" Height="9.2" VerticalAlignment="Top" Background="Red" Opacity="0.5" Content="Button"/>
+            <Thumb HorizontalAlignment="Right" Margin="0,-1,-6.5,-1" Width="6.5" Background="{x:Null}" Foreground="{x:Null}" Opacity="0.3" DragDelta="Thumb_DragDelta" Cursor="SizeWE" MinWidth="6.5" Tag="RightResizer"/>
+            <Thumb HorizontalAlignment="Left" Margin="-6.5,-1,0,-1" Width="6.5" Background="{x:Null}" Foreground="{x:Null}" Opacity="0.3" DragDelta="Thumb_DragDelta" Cursor="SizeWE" MinWidth="6.5" Tag="LeftResizer"/>
             
         </Grid>
     </Border>
